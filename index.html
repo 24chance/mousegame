@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse Game</title>
+
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.min.js" integrity="sha512-WW8/jxkELe2CAiE4LvQfwm1rajOS8PHasCCx+knHG0gBHt8EXxS6T6tJRTGuDQVnluuAvMxWF4j8SNFDKceLFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <style>
+
+        .drawing-area {
+            width: 100%;
+            height: clamp(400px, 60vh, 600px);
+            padding: 0 10px;
+            background-color: #00000098;
+            overflow: hidden;
+            scrollbar-width: none; 
+        }
+
+        .drawing-area::-webkit-scrollbar {
+            display: none; 
+        }
+
+        .vertical{
+            background: #fff;
+            width: 50px;
+            height: 200px;
+            border: none;
+            cursor: grab;
+            writing-mode: vertical-lr;
+            font-size: 30px;
+            color: #b4b2b2; 
+        }
+        .horizontal{
+            background: #fff;
+            width: 450px;
+            height: 50px;
+            border: none;
+            cursor: grab;
+        }
+        .horizontal.final{
+            width: 600px;
+            background: #0000004d;
+            font-size: 20px;
+            font-family: sans-serif;
+            letter-spacing: 2px;
+            color: white;
+        }
+        .final i{
+            color: rgb(206, 223, 223);
+            padding: 0 10px;
+            font-size: 25px;
+        }
+
+        .counter{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #00000085;
+            z-index: 10;
+            overflow: hidden;
+            display: none;
+        }
+        .counter h1{
+            font-size: 30rem;
+            color: rgb(54, 155, 155);
+        }
+
+    
+        
+
+
+
+    </style>
+</head>
+<body class="bg-info">
+
+    <div class="container">
+
+        
+        <h1 class="text-center mt-3 mb-3 display-6 text-dark">Mouse Game</h1>
+        <h3 class="alert alert-success text-center" id="results">Keep the mouse inside the white little box to earn the points</h3>
+
+        <div class="container my-3 d-flex justify-content-between flex-wrap">
+            <div class="d-flex flex-column gap-2 justify-content-center">
+                <h5 class="card-title">Your Score: <span id="score">00</span></h5>
+                <h5 class="card-title">Time: <span id="time">00</span></h5>
+            </div>
+            <div class="d-flex flex-column gap-2">
+                <button class="btn btn-primary" id="start">Start the game</button>
+                <button class="btn btn-danger" id="reset">Restart</button>
+            </div>
+            <div class="d-flex flex-column gap-2 justify-content-center">
+                <h5 class="card-title">Your Level: <span id="level">1</span></h5>
+                <button class="btn btn-secondary" id="levelbtn">Change level</button>
+            </div>
+        </div>
+
+        <div class=" counter">
+            <h1 class="text-center display-1">1</h1>
+        </div>
+
+                
+        <div class="drawing-area shadow-sm text-center">
+            <div class="block d-flex justify-content-center ">
+                <div class="vertical deal">Through here!</div>
+            </div>
+            <div class="block d-flex justify-content-center ">
+                <div class="vertical deal"></div>
+                <div class="horizontal deal"></div>
+                <div class="vertical deal"></div>
+            </div>
+            <div class="block d-flex  ">
+                <div class="vertical deal"></div>
+                <div class="horizontal deal"></div>
+                <div class="vertical deal"></div>
+                <div class="horizontal deal"></div>
+                <div class="vertical deal"></div>
+                <div class="horizontal deal"></div>
+                <div class="vertical deal"></div>
+            </div>
+            <div class="block d-flex ">
+                <div class="horizontal deal"></div>
+                <div class="horizontal deal"></div>
+                <div class="vertical deal"></div>
+            </div>
+            <div class="block d-flex ">
+                <div class="horizontal deal"></div>
+                <div class="vertical deal"></div>
+                <div class="horizontal deal"></div>
+                <div class="vertical deal"></div>
+            </div>
+            <div class="block d-flex justify-content-center ">
+                <div class="vertical deal"></div>
+                <div class="horizontal deal"></div>
+                <div class="vertical deal"></div>
+                <div class="horizontal deal"></div>
+            </div>
+            <div class="block d-flex justify-content-center ">
+                <div class="horizontal deal"></div>
+                <div class="vertical deal"></div>
+            </div>
+            <div class="block d-flex justify-content-end ">
+                <div class="vertical deal"></div>
+                <div class="horizontal deal"></div>
+                <div class="vertical deal"></div>
+            </div>
+            <div class="block d-flex justify-content-center ">
+                <div class="vertical deal"></div>
+                <div class="horizontal deal"></div>
+                <div class="vertical deal"></div>
+            </div>
+            <div class="block d-flex justify-content-center align-items-center ">
+                <div class="horizontal deal final d-flex justify-content-center align-items-center">You did it!!! <i class="fa-solid fa-trophy"></i></div>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        
+        // global variables
+        var gamerun = false
+        var start = document.querySelector("#start");
+        var reset = document.querySelector("#reset")
+        var div = document.querySelectorAll(".deal");
+        var drawingArea = document.querySelector(".drawing-area");
+        var gamestat = false
+        var res = document.querySelector("#results")
+        var time
+        var stat = ""
+
+
+
+        // changing the levels
+        var level = document.querySelector("#level").innerHTML
+        levelbtn.addEventListener("click", () => {
+
+            let levelbtn = document.querySelector("#levelbtn");
+            i = parseInt(level) + 1
+
+            if(level < 5){
+                document.querySelector("#level").innerHTML = i
+            }else{
+                document.querySelector("#level").innerHTML = 1
+            }
+            return level = document.querySelector("#level").innerHTML
+        })
+
+        
+        // start the game 
+        start.addEventListener("click", () => {
+
+
+            // check if the game is already running
+            if(gamestat == true){
+                return;
+            }
+            
+            // show that game is running
+            gamestat = true
+            gamerun = true
+
+            // counter 
+            let counter = document.querySelector(".counter h1")
+            let counterCont = document.querySelector(".counter")
+
+            counterCont.style.display = "block"
+            counting = setInterval(() => {
+                counter.innerHTML = parseInt(counter.innerHTML) + 1
+            }, 1000)
+
+            setTimeout(() => {
+                counterCont.style.display = "none"
+                clearInterval(counting)
+            }, 3000)
+
+
+            // start scroll smoothly
+            var startgame = setTimeout(() => {    
+                    
+                    
+                drawingArea.scrollTop = 0
+                var scrollStep = parseInt(level)
+                var scrollInterval = 10; 
+                var scrollCount = 0;
+
+                
+                function scrollSmoothly() {
+                    if(!gamerun){
+                        return;
+                    }
+                    var scrollHeight = drawingArea.scrollHeight; 
+                    scrollCount += scrollStep;
+                    var currentScrollTop = scrollCount;
+                    drawingArea.scrollTop = currentScrollTop;
+                    
+                    if (scrollCount < scrollHeight) {
+                        requestAnimationFrame(scrollSmoothly);
+                    }
+                    // else{
+                    //     clearTimeout(startgame)
+                    //     success()
+                    // }
+                }
+                
+                requestAnimationFrame(scrollSmoothly);
+                
+                window.scrollTo(0, document.body.scrollHeight)
+                
+
+            }, 4000);
+
+            results()
+
+            });
+
+        
+        // reset button here 
+        reset.addEventListener("click", () => {
+                location.reload();
+        });
+
+       
+        
+    function results(){
+
+    // check if he fails or wins
+    var currentscore = 0
+
+    drawingArea.addEventListener("mouseover", () => {
+        // Check if the cursor is inside the white path
+        if (event.target.classList.contains('deal')) {
+            if (!time) { // Check if the interval is not already running
+                time = setInterval(() => {
+                    currenttime = parseInt(document.querySelector("#time").innerHTML)
+                    if(currenttime < 9){
+                        currenttime += 1
+                        document.querySelector("#time").innerHTML = "0" + currenttime
+                    } else {
+                        currenttime += 1
+                        document.querySelector("#time").innerHTML = currenttime
+                    }
+                    
+                    if(currenttime % 5 == 0){
+                        currentscore = parseInt(currentscore) + 10
+                        document.querySelector("#score").innerHTML = currentscore
+                    }
+                }, 1000)
+            }
+        } else{ 
+            if(stat == "success"){
+                return
+            }else{
+
+                clearInterval(time);
+                res.innerHTML = "You lost already, WTF!!! only " + document.querySelector("#score").innerHTML + " points"
+                res.classList.remove("alert-primary")
+                res.classList.add("alert-danger")
+                gamerun = false
+                stat = "failed"
+            }
+        }
+
+})
+}
+
+    // function success(){
+        var final = document.querySelector(".final")
+
+        final.addEventListener("mouseenter", () => {
+            if(stat != "failed"){
+                clearInterval(time);
+                res.innerHTML = "A'ight, you did it. You scored " + document.querySelector("#score").innerHTML + " points"
+                res.classList.add("text-success")
+                gamerun = false
+                stat = "success"
+                // alert("you scored")
+            }
+        })
+    // }    
+
+    </script>
+</body>
+</html>
